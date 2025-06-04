@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { projects as mockProjects, customers } from '../data/mockData';
 import { ProjectStatus, Project } from '../types';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { Card } from '../components/ui/Card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 
 const ProjectsPage: React.FC = () => {
   const [projects, setProjects] = useState(mockProjects);

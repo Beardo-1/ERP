@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { leases as mockLeases, properties, users } from '../data/mockData';
+import { leases as mockLeases, properties, customers } from '../data/mockData';
 import { LeaseStatus, Lease } from '../types';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { Card } from '../components/ui/Card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '../components/ui/card';
 
 const LeasePage: React.FC = () => {
   const [leases, setLeases] = useState(mockLeases);
@@ -227,7 +227,7 @@ const LeasePage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredLeases.map((lease) => {
           const property = properties.find(p => p.id === lease.propertyId);
-          const tenant = users.find(u => u.id === lease.tenantId);
+          const tenant = customers.find(u => u.id === lease.tenantId);
           
           return (
             <Card 
@@ -241,9 +241,9 @@ const LeasePage: React.FC = () => {
                     <h3 className="font-bold text-lg text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
                       {property?.title || 'Unknown Property'}
                     </h3>
-                    <p className="text-sm text-gray-500">
-                      Tenant: {tenant ? `${tenant.firstName} ${tenant.lastName}` : 'Unknown Tenant'}
-                    </p>
+                    <div className="text-sm text-gray-600">
+                      <span className="font-medium">Tenant:</span> {tenant ? tenant.name : 'Unknown'}
+                    </div>
                   </div>
                   <div className="flex gap-1">
                     <button 
@@ -305,7 +305,7 @@ const LeasePage: React.FC = () => {
                   <Button
                     onClick={() => openEdit(lease)}
                     variant="outline"
-                    size="small"
+                    size="sm"
                     className="flex-1 text-blue-600 border-blue-200 hover:bg-blue-50"
                   >
                     Edit
@@ -313,7 +313,7 @@ const LeasePage: React.FC = () => {
                   <Button
                     onClick={() => deleteLease(lease.id)}
                     variant="outline"
-                    size="small"
+                    size="sm"
                     className="flex-1 text-red-600 border-red-200 hover:bg-red-50"
                   >
                     Delete
@@ -364,12 +364,12 @@ const LeasePage: React.FC = () => {
                   <select 
                     className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 font-medium"
                     value={form.tenantId} 
-                    onChange={(e) => setForm(f => ({ ...f, tenantId: e.target.value }))} 
+                    onChange={(e) => setForm(f => ({ ...f, tenantId: e.target.value }))}
                     required
                   >
                     <option value="">Select Tenant</option>
-                    {users.map(u => (
-                      <option key={u.id} value={u.id}>{u.firstName} {u.lastName}</option>
+                    {customers.map(u => (
+                      <option key={u.id} value={u.id}>{u.name}</option>
                     ))}
                   </select>
                 </div>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { transactions, properties, users } from '../data/mockData';
 import { TransactionType, FinancialTransaction } from '../types';
-import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 
 const FinancePage: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('month');
@@ -218,10 +220,10 @@ const FinancePage: React.FC = () => {
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-bold text-gray-900">Recent Transactions</h3>
             <div className="flex gap-2">
-              <Button variant="outline" size="small" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+              <Button variant="outline" size="sm" className="text-blue-600 border-blue-200 hover:bg-blue-50">
                 Filter
               </Button>
-              <Button variant="outline" size="small" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+              <Button variant="outline" size="sm" className="text-blue-600 border-blue-200 hover:bg-blue-50">
                 Export
               </Button>
             </div>

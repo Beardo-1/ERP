@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useCustomerStore } from '../store/customerStore';
-import { Avatar } from '../components/ui/Avatar';
-import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/Avatar';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { UserRole, CustomerStatus, Customer } from '../types/index';
 import { X } from 'lucide-react';
 import './CustomerDrawer.css';
 import { useNavigate } from 'react-router-dom';
-import { Input } from '../components/ui/Input';
+import { Input } from '@/components/ui/input';
 
 // Helper for CSV export
 function exportToCSV(customers: Customer[], filename = 'customers.csv') {
@@ -213,12 +213,12 @@ const CustomerPage: React.FC = () => {
         </select>
         {currentUserRole === UserRole.ADMIN || currentUserRole === UserRole.MANAGER ? (
           <>
-            <Button variant="outline" size="small" onClick={() => exportToCSV(selected.length ? customers.filter(c => selected.includes(c.id)) : filtered)}>Export CSV</Button>
-            {selected.length > 0 && <Button variant="danger" size="small" onClick={clearSelection}>Clear Selection</Button>}
+            <Button variant="outline" size="sm" onClick={() => exportToCSV(selected.length ? customers.filter(c => selected.includes(c.id)) : filtered)}>Export CSV</Button>
+            {selected.length > 0 && <Button variant="destructive" size="sm" onClick={clearSelection}>Clear Selection</Button>}
           </>
         ) : null}
-        <Button variant="primary" size="small" onClick={openAdd}>Add Customer</Button>
-        <Button variant="outline" size="small">Bulk Campaigns</Button>
+        <Button variant="default" size="sm" onClick={openAdd}>Add Customer</Button>
+        <Button variant="outline" size="sm">Bulk Campaigns</Button>
       </div>
 
       {/* Table */}
@@ -235,13 +235,18 @@ const CustomerPage: React.FC = () => {
             {paged.map(customer => (
               <tr key={customer.id} className={selected.includes(customer.id) ? 'bg-primary-50' : ''}>
                 <td className="px-4 py-2"><input type="checkbox" checked={selected.includes(customer.id)} onChange={() => toggleSelect(customer.id)} /></td>
-                <td className="px-4 py-2 flex items-center gap-2"><Avatar name={customer.name} size="sm" /><span className="cursor-pointer underline hover:text-primary-700" onClick={() => navigate(`/customers/${customer.id}`)}>{customer.name}</span></td>
+                <td className="px-4 py-2 flex items-center gap-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback>{customer.name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                  <span className="cursor-pointer underline hover:text-primary-700" onClick={() => navigate(`/customers/${customer.id}`)}>{customer.name}</span>
+                </td>
                 <td className="px-4 py-2">{customer.email}</td>
                 <td className="px-4 py-2">{customer.company}</td>
                 <td className="px-4 py-2"><span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${statusColors[customer.status]}`}>{customer.status.charAt(0).toUpperCase() + customer.status.slice(1)}</span></td>
                 <td className="px-4 py-2">{customer.createdAt.toLocaleDateString()}</td>
                 <td className="px-4 py-2">
-                  <Button variant="outline" size="small" onClick={() => openEdit(customer)}>Edit</Button>
+                  <Button variant="outline" size="sm" onClick={() => openEdit(customer)}>Edit</Button>
                 </td>
               </tr>
             ))}
@@ -254,10 +259,10 @@ const CustomerPage: React.FC = () => {
       <div className="flex items-center justify-between mt-4">
         <div className="text-sm text-neutral-500">Page {page} of {totalPages}</div>
         <div className="flex gap-2">
-          <Button size="small" variant="outline" onClick={() => setPage(1)} disabled={page === 1}>First</Button>
-          <Button size="small" variant="outline" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>Prev</Button>
-          <Button size="small" variant="outline" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>Next</Button>
-          <Button size="small" variant="outline" onClick={() => setPage(totalPages)} disabled={page === totalPages}>Last</Button>
+          <Button size="sm" variant="outline" onClick={() => setPage(1)} disabled={page === 1}>First</Button>
+          <Button size="sm" variant="outline" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>Prev</Button>
+          <Button size="sm" variant="outline" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>Next</Button>
+          <Button size="sm" variant="outline" onClick={() => setPage(totalPages)} disabled={page === totalPages}>Last</Button>
         </div>
       </div>
 
@@ -276,7 +281,7 @@ const CustomerPage: React.FC = () => {
               <option value="inactive">Inactive</option>
             </select>
             <div className="flex gap-2 mt-2">
-              <Button type="submit" variant="primary">Save</Button>
+              <Button type="submit" variant="default">Save</Button>
               <Button type="button" variant="outline" onClick={closeModal}>Cancel</Button>
             </div>
           </form>
@@ -292,7 +297,9 @@ const CustomerPage: React.FC = () => {
           <div className="relative ml-auto w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-slide-in-right">
             <button className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700" onClick={() => setDrawerCustomer(null)}><X size={24} /></button>
             <div className="p-6 flex flex-col items-center border-b">
-              <Avatar name={drawerCustomer.name} size="lg" />
+              <Avatar className="h-16 w-16">
+                <AvatarFallback>{drawerCustomer.name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+              </Avatar>
               <div className="mt-3 text-xl font-bold">{drawerCustomer.name}</div>
               <span className={`mt-1 inline-block px-2 py-1 rounded text-xs font-semibold ${statusColors[drawerCustomer.status]}`}>{drawerCustomer.status.charAt(0).toUpperCase() + drawerCustomer.status.slice(1)}</span>
               <div className="mt-2 text-sm text-neutral-500">{drawerCustomer.email}</div>
@@ -303,9 +310,9 @@ const CustomerPage: React.FC = () => {
               <div className="text-xs text-neutral-400">Updated: {drawerCustomer.updatedAt.toLocaleDateString()}</div>
               {/* Quick Actions */}
               <div className="flex gap-2 mt-4">
-                <Button size="small" variant="outline">Email</Button>
-                <Button size="small" variant="outline">Call</Button>
-                <Button size="small" variant="outline">Add Note</Button>
+                <Button size="sm" variant="outline">Email</Button>
+                <Button size="sm" variant="outline">Call</Button>
+                <Button size="sm" variant="outline">Add Note</Button>
               </div>
             </div>
             {/* Stub for future tabs/sections */}

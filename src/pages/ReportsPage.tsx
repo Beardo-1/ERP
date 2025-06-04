@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { salesStatistics } from '../data/mockData';
-import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const ReportsPage: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('month');
@@ -208,7 +209,7 @@ const ReportsPage: React.FC = () => {
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">Top Performers</h3>
-              <Button variant="outline" size="small" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+              <Button variant="outline" size="sm" className="text-blue-600 border-blue-200 hover:bg-blue-50">
                 View All
               </Button>
             </div>
@@ -232,9 +233,9 @@ const ReportsPage: React.FC = () => {
                     <div className="font-bold text-gray-900">{performer.value}</div>
                     <div className={`text-sm ${performer.color}`}>{performer.change}</div>
                   </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
           </div>
         </Card>
       </div>
@@ -245,11 +246,11 @@ const ReportsPage: React.FC = () => {
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-bold text-gray-900">Monthly Sales Breakdown</h3>
             <div className="flex gap-2">
-              <Button variant="outline" size="small" className="text-blue-600 border-blue-200 hover:bg-blue-50">
-                Download CSV
+              <Button variant="outline" size="sm" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+                Filter
               </Button>
-              <Button variant="outline" size="small" className="text-blue-600 border-blue-200 hover:bg-blue-50">
-                Print Report
+              <Button variant="outline" size="sm" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+                Export
               </Button>
             </div>
           </div>

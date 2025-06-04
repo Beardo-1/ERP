@@ -7,7 +7,7 @@ import {
   Home, FileText, DollarSign, Megaphone, Folder
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
-import { Avatar } from '../ui/Avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/Avatar';
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -230,12 +230,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
           <div className="flex items-center justify-between bg-slate-800/50 rounded-xl p-3 border border-slate-700/50">
             <div className="flex items-center space-x-3">
               <div className="relative">
-              <Avatar
-                src={user?.avatar}
-                name={`${user?.firstName} ${user?.lastName}`}
-                size="sm"
-                status="online"
-              />
+                <Avatar className="h-8 w-8">
+                  {user?.avatar && <AvatarImage src={user.avatar} />}
+                  <AvatarFallback>{`${user?.firstName || ''} ${user?.lastName || ''}`.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                </Avatar>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-slate-800 rounded-full"></div>
               </div>
               <div className="min-w-0 flex-1">
@@ -255,13 +253,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
         ) : (
           <div className="flex justify-center bg-slate-800/50 rounded-xl p-2">
             <button onClick={() => setExpanded(true)} className="relative">
-            <Avatar
-              src={user?.avatar}
-              name={`${user?.firstName} ${user?.lastName}`}
-              size="sm"
-              status="online"
-              className="cursor-pointer"
-            />
+              <Avatar className="h-8 w-8 cursor-pointer">
+                {user?.avatar && <AvatarImage src={user.avatar} />}
+                <AvatarFallback>{`${user?.firstName || ''} ${user?.lastName || ''}`.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+              </Avatar>
               <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-slate-800 rounded-full"></div>
             </button>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCustomerStore } from '../store/customerStore';
-import { Avatar } from '../components/ui/Avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/Avatar';
 import { Users, BarChart2, TrendingUp, Mail, Phone, Star, ShieldCheck, Activity, Calendar, Layers, Zap, MapPin, Home, Building, Plus, MoreVertical } from 'lucide-react';
 
 const TABS = [
@@ -72,7 +72,11 @@ const CustomerProfilePage: React.FC = () => {
       <div className="w-full flex flex-col md:flex-row items-center md:items-start gap-8 px-0 md:px-12 pt-12 pb-8">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="relative group">
-            <Avatar name={customer.name} size="xl" className="shadow-xl border-4 border-white/80 bg-gradient-to-tr from-blue-400 to-blue-600 text-white group-hover:scale-105 transition-transform duration-200" />
+            <Avatar className="h-20 w-20 shadow-xl border-4 border-white/80 group-hover:scale-105 transition-transform duration-200">
+              <AvatarFallback className="bg-gradient-to-tr from-blue-400 to-blue-600 text-white text-2xl font-bold">
+                {customer.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
             <span className={`absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold shadow ${statusColors[customer.status]} border border-white/60`}>{customer.status.charAt(0).toUpperCase() + customer.status.slice(1)}</span>
             {/* Camera icon overlay for future change picture */}
             <span className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow group-hover:bg-blue-100 transition-colors cursor-pointer" title="Change picture">
@@ -146,8 +150,9 @@ const CustomerProfilePage: React.FC = () => {
               <div className="flex flex-col gap-4">
                 {mockProperties.map((prop) => (
                   <div key={prop.id} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-amber-50 hover:shadow-xl transition-all group border border-blue-100 cursor-pointer">
-                    <Avatar name={prop.title} size="md" className="shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white" />
-                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow border-2 border-blue-100 group-hover:scale-110 transition-transform hidden" />
+                    <Avatar className="h-12 w-12 shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white">
+                      <AvatarFallback>{prop.title.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                    </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-lg text-neutral-900 truncate mb-1">{prop.title}</div>
                       <div className="text-sm text-neutral-500">{prop.city} • {prop.price}</div>
@@ -164,7 +169,9 @@ const CustomerProfilePage: React.FC = () => {
               <div className="flex flex-col gap-4">
                 {mockDeals.map((deal) => (
                   <div key={deal.id} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-white hover:shadow-xl transition-all group border border-blue-100 cursor-pointer">
-                    <Avatar name={deal.agent} size="md" className="shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white" />
+                    <Avatar className="h-12 w-12 shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white">
+                      <AvatarFallback>{deal.agent.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                    </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-lg text-neutral-900 truncate mb-1">{deal.name}</div>
                       <div className="text-sm text-neutral-500">{deal.stage} • {deal.date}</div>
@@ -181,7 +188,9 @@ const CustomerProfilePage: React.FC = () => {
               <div className="flex flex-col gap-4">
                 {mockDocuments.map((doc) => (
                   <div key={doc.id} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-white hover:shadow-xl transition-all group border border-blue-100 cursor-pointer">
-                    <Avatar name={doc.uploadedBy} size="md" className="shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white" />
+                    <Avatar className="h-12 w-12 shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white">
+                      <AvatarFallback>{doc.uploadedBy.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                    </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-lg text-neutral-900 truncate mb-1">{doc.name}</div>
                       <div className="text-sm text-neutral-500">{doc.type} • {doc.uploadedAt}</div>
@@ -198,7 +207,9 @@ const CustomerProfilePage: React.FC = () => {
               <div className="flex flex-col gap-4">
                 {mockActivity.map((act) => (
                   <div key={act.id} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-white hover:shadow-xl transition-all group border border-blue-100 cursor-pointer">
-                    <Avatar name={act.user} size="md" className="shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white" />
+                    <Avatar className="h-12 w-12 shadow border-2 border-blue-100 group-hover:scale-110 transition-transform bg-white">
+                      <AvatarFallback>{act.user.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                    </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-lg text-neutral-900 truncate mb-1">{act.user}</div>
                       <div className="text-sm text-neutral-500">{act.type} • {act.date}</div>

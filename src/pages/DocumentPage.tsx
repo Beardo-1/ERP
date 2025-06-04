@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { documents as mockDocuments, users } from '../data/mockData';
 import { DocumentType, Document } from '../types';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { Card } from '../components/ui/Card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 
 const DocumentPage: React.FC = () => {
   const [documents, setDocuments] = useState(mockDocuments);
@@ -283,13 +283,12 @@ const DocumentPage: React.FC = () => {
                   <Button
                     onClick={() => window.open(doc.url, '_blank')}
                     variant="outline"
-                    size="small"
+                    size="sm"
                     className="flex-1 text-blue-600 border-blue-200 hover:bg-blue-50"
                   >
                     <span className="flex items-center gap-1">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-1M10 6V5a2 2 0 011-1h4a2 2 0 011 1v1m-6 0h6m0 0v1m0-1h6m-6 1v3m0 0h.01M15 8h.01" />
                       </svg>
                       View
                     </span>
@@ -297,7 +296,7 @@ const DocumentPage: React.FC = () => {
                   <Button
                     onClick={() => openEdit(doc)}
                     variant="outline"
-                    size="small"
+                    size="sm"
                     className="flex-1 text-green-600 border-green-200 hover:bg-green-50"
                   >
                     Edit

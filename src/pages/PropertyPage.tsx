@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { properties as mockProperties } from '../data/mockData';
 import { PropertyStatus, PropertyType, Property } from '../types';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { Card } from '../components/ui/Card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 
 const PropertyPage: React.FC = () => {
   const [properties, setProperties] = useState(mockProperties);

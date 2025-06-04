@@ -3,7 +3,7 @@ import { products as mockProducts } from '../data/mockData';
 import { Product } from '../types';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { Card } from '../components/ui/Card';
+import { Card } from '../components/ui/card';
 
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState(mockProducts);

@@ -1,8 +1,133 @@
 import React, { useState } from 'react';
-import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
+import { customers } from '../data/mockData';
+import { CampaignStatus } from '../types';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '../components/ui/card';
+
+// Define Campaign interface locally since it's not exported from types
+interface Campaign {
+  id: string;
+  name: string;
+  type: string;
+  status: CampaignStatus;
+  budget: number;
+  spent: number;
+  reach: number;
+  clicks: number;
+  conversions: number;
+  startDate: Date;
+  endDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Mock campaigns data
+const mockCampaigns: Campaign[] = [
+  {
+    id: '1',
+    name: 'Summer Property Sale',
+    type: 'Email',
+    status: CampaignStatus.ACTIVE,
+    budget: 5000,
+    spent: 3200,
+    reach: 15000,
+    clicks: 850,
+    conversions: 42,
+    startDate: new Date('2024-06-01'),
+    endDate: new Date('2024-08-31'),
+    createdAt: new Date('2024-05-15'),
+    updatedAt: new Date('2024-07-10')
+  },
+  {
+    id: '2',
+    name: 'New Development Launch',
+    type: 'Social Media',
+    status: CampaignStatus.PLANNED,
+    budget: 8000,
+    spent: 0,
+    reach: 0,
+    clicks: 0,
+    conversions: 0,
+    startDate: new Date('2024-09-01'),
+    endDate: new Date('2024-11-30'),
+    createdAt: new Date('2024-07-20'),
+    updatedAt: new Date('2024-07-20')
+  }
+];
 
 const MarketingPage: React.FC = () => {
+  const [campaigns, setCampaigns] = useState(mockCampaigns);
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState<Campaign | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [form, setForm] = useState({ 
+    name: '', 
+    type: '', 
+    status: CampaignStatus.PLANNED,
+    budget: 0,
+    startDate: '',
+    endDate: ''
+  });
+
+  const openAdd = () => { 
+    setEditing(null); 
+    setForm({ 
+      name: '', 
+      type: '', 
+      status: CampaignStatus.PLANNED,
+      budget: 0,
+      startDate: '',
+      endDate: ''
+    }); 
+    setShowModal(true); 
+  };
+  
+  const openEdit = (campaign: Campaign) => { 
+    setEditing(campaign); 
+    setForm({
+      name: campaign.name,
+      type: campaign.type,
+      status: campaign.status,
+      budget: campaign.budget,
+      startDate: campaign.startDate.toISOString().split('T')[0],
+      endDate: campaign.endDate ? campaign.endDate.toISOString().split('T')[0] : ''
+    }); 
+    setShowModal(true); 
+  };
+  
+  const closeModal = () => setShowModal(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editing) {
+      setCampaigns(campaigns.map(c => c.id === editing.id ? { 
+        ...editing, 
+        ...form,
+        startDate: new Date(form.startDate),
+        endDate: form.endDate ? new Date(form.endDate) : undefined,
+        updatedAt: new Date()
+      } : c));
+    } else {
+      const newCampaign: Campaign = { 
+        ...form, 
+        id: Date.now().toString(),
+        spent: 0,
+        reach: 0,
+        clicks: 0,
+        conversions: 0,
+        startDate: new Date(form.startDate),
+        endDate: form.endDate ? new Date(form.endDate) : undefined,
+        createdAt: new Date(), 
+        updatedAt: new Date() 
+      };
+      setCampaigns([...campaigns, newCampaign]);
+    }
+    closeModal();
+  };
+  
+  const deleteCampaign = (id: string) => setCampaigns(campaigns.filter(c => c.id !== id));
+
   const [selectedPeriod, setSelectedPeriod] = useState('month');
   const [selectedCampaign, setSelectedCampaign] = useState('all');
 
@@ -340,18 +465,20 @@ const MarketingPage: React.FC = () => {
               {/* Campaign Actions */}
               <div className="flex gap-2 pt-4 border-t border-gray-100">
                 <Button
+                  onClick={() => openEdit(campaign)}
                   variant="outline"
-                  size="small"
+                  size="sm"
                   className="flex-1 text-blue-600 border-blue-200 hover:bg-blue-50"
                 >
-                  View Details
+                  Edit
                 </Button>
                 <Button
+                  onClick={() => deleteCampaign(campaign.id)}
                   variant="outline"
-                  size="small"
-                  className="flex-1 text-green-600 border-green-200 hover:bg-green-50"
+                  size="sm"
+                  className="flex-1 text-red-600 border-red-200 hover:bg-red-50"
                 >
-                  Analytics
+                  Delete
                 </Button>
               </div>
             </div>
