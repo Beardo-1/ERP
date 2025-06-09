@@ -1,0 +1,257 @@
+/* RTL Layout Fixes */
+.rtl-content {
+  direction: rtl;
+}
+
+.rtl-content .recharts-wrapper {
+  direction: rtl;
+}
+
+.rtl-content .recharts-cartesian-axis-tick-value {
+  text-anchor: start !important;
+}
+
+.rtl-content .recharts-legend-wrapper {
+  direction: rtl;
+}
+
+/* RTL Table Fixes */
+.rtl-table {
+  direction: rtl;
+}
+
+.rtl-table th,
+.rtl-table td {
+  text-align: right;
+  padding-right: 1rem;
+  padding-left: 0.5rem;
+}
+
+.rtl-table .table-actions {
+  text-align: left;
+}
+
+/* RTL Form Fixes */
+.rtl-form .form-label {
+  text-align: right;
+}
+
+.rtl-form .form-input {
+  text-align: right;
+  direction: rtl;
+}
+
+.rtl-form .form-checkbox {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+/* RTL Navigation Fixes */
+.rtl-nav .nav-item {
+  text-align: right;
+}
+
+.rtl-nav .nav-icon {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  /* Dashboard Grid Fixes */
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  
+  .dashboard-card {
+    min-height: auto;
+    padding: 1rem;
+  }
+  
+  /* Chart Responsiveness */
+  .chart-container {
+    width: 100% !important;
+    height: 250px !important;
+    overflow-x: auto;
+  }
+  
+  .recharts-wrapper {
+    min-width: 300px;
+  }
+  
+  /* Mobile Table Fixes */
+  .mobile-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .mobile-table thead {
+    display: none;
+  }
+  
+  .mobile-table tbody tr {
+    display: block;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .mobile-table tbody td {
+    display: block;
+    text-align: right;
+    border: none;
+    padding: 0.25rem 0;
+  }
+  
+  .mobile-table tbody td:before {
+    content: attr(data-label) ": ";
+    font-weight: bold;
+    color: #6b7280;
+  }
+  
+  /* Mobile Navigation */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    padding: 0.5rem;
+    z-index: 50;
+  }
+  
+  .mobile-nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Hide desktop elements on mobile */
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  /* Show mobile-only elements */
+  .mobile-only {
+    display: block !important;
+  }
+  
+  /* Mobile Language Switcher */
+  .mobile-lang-switcher {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 40;
+  }
+  
+  /* Mobile Search */
+  .mobile-search {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  /* Mobile Filters */
+  .mobile-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-filter-chip {
+    padding: 0.25rem 0.5rem;
+    background: #f3f4f6;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Tablet Responsiveness */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .chart-container {
+    height: 300px;
+  }
+  
+  .tablet-stack {
+    flex-direction: column;
+  }
+}
+
+/* RTL Mobile Specific Fixes */
+@media (max-width: 640px) {
+  .rtl-content .mobile-table tbody td {
+    text-align: right;
+  }
+  
+  .rtl-content .mobile-table tbody td:before {
+    float: right;
+    margin-left: 0.5rem;
+  }
+  
+  .rtl-content .mobile-nav-item {
+    text-align: center;
+  }
+  
+  .rtl-content .mobile-lang-switcher {
+    right: auto;
+    left: 1rem;
+  }
+}
+
+/* High Contrast Mode for Accessibility */
+@media (prefers-contrast: high) {
+  .dashboard-card {
+    border: 2px solid #000;
+  }
+  
+  .chart-container {
+    border: 1px solid #000;
+  }
+  
+  .mobile-table tbody tr {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .mobile-nav,
+  .mobile-lang-switcher,
+  .dashboard-actions {
+    display: none !important;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .chart-container {
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+} 

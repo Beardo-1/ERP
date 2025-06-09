@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { UserRole, CustomerStatus, Customer } from '../types/index';
 import { X } from 'lucide-react';
 import './CustomerDrawer.css';
-import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 
 // Helper for CSV export
@@ -53,7 +52,6 @@ const CustomerPage: React.FC = () => {
   const [pageSize, setPageSize] = useState(pageSizeOptions[0]);
   const currentUserRole = UserRole.ADMIN; // TODO: get from auth context
   const [drawerCustomer, setDrawerCustomer] = useState<Customer | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => { loadCustomers(); }, [loadCustomers]);
 
@@ -161,6 +159,17 @@ const CustomerPage: React.FC = () => {
     scrollToTable();
   };
 
+  // Placeholder function for customer detail navigation
+  const handleCustomerClick = (customerId: string) => {
+    // TODO: Implement customer detail view
+    console.log('Navigate to customer:', customerId);
+    // For now, we could open the edit modal or show an alert
+    const customer = customers.find(c => c.id === customerId);
+    if (customer) {
+      setDrawerCustomer(customer);
+    }
+  };
+
   return (
     <div className="p-4">
       {/* Summary Cards */}
@@ -239,7 +248,7 @@ const CustomerPage: React.FC = () => {
                   <Avatar className="h-8 w-8">
                     <AvatarFallback>{customer.name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
                   </Avatar>
-                  <span className="cursor-pointer underline hover:text-primary-700" onClick={() => navigate(`/customers/${customer.id}`)}>{customer.name}</span>
+                  <span className="cursor-pointer underline hover:text-primary-700" onClick={() => handleCustomerClick(customer.id)}>{customer.name}</span>
                 </td>
                 <td className="px-4 py-2">{customer.email}</td>
                 <td className="px-4 py-2">{customer.company}</td>
